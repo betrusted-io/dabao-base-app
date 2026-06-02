@@ -16,9 +16,3 @@ demo commands. The base demonstration includes:
 Users looking to add new commands can follow the four-step guide inside `src/cmds.rs`, or
 they can simply modify an existing command template by adding an entry to the
 match statement (for example, see `src/cmds/test.rs`).
-
-## Xous Toolchain
-
-Xous is a Tier-3 Rust target, which means that you can't just run rustup update
-to retrieve the `std` library for Xous. The `build.rs` script checks for the presence
-of the Xoust `std` toolchain on every build, and ensures that it is installed.
