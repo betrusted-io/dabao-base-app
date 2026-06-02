@@ -1,3 +1,6 @@
 *~
 target/
 apps.uf2
+# don't track this on the out-of-tree reference apps, users
+# can choose to track this or not.
+Cargo.lock
