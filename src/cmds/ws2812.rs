@@ -33,7 +33,7 @@ impl<'a> ShellCmdApi<'a> for Ws2812 {
         let helpstring =
             "ws2812 [rainbow [<duration>]] [touch [<duration>]] [length <pixels>] [hexcolor <#rrggbb>]";
 
-        let mut tokens = args.split(' ');
+        let mut tokens = args.split_whitespace();
 
         if let Some(sub_cmd) = tokens.next() {
             match sub_cmd {

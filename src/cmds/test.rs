@@ -16,7 +16,7 @@ impl<'a> ShellCmdApi<'a> for Test {
 
         let helpstring = "test [proc] [freemem] [interrupts] [panic] [dietemp] [env]";
 
-        let mut tokens = args.split(' ');
+        let mut tokens = args.split_whitespace();
 
         if let Some(sub_cmd) = tokens.next() {
             match sub_cmd {

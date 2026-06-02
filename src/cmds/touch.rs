@@ -19,7 +19,7 @@ impl<'a> ShellCmdApi<'a> for Touch {
         let mut ret = String::new();
         let helpstring = "touch [pin] [monitor] [wait-touch] [wait-release] [touch-release]";
 
-        let mut tokens = args.split(' ');
+        let mut tokens = args.split_whitespace();
 
         if let Some(sub_cmd) = tokens.next() {
             match sub_cmd {
