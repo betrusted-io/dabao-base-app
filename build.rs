@@ -1,4 +1,4 @@
-// build.rs — standalone equivalent of `cargo xtask install-toolkit`
+// build.rs - standalone equivalent of `cargo xtask install-toolkit`
 //
 // Runs automatically when this crate is built. It ensures that:
 //   1. The custom riscv32imac-unknown-xous-elf sysroot (with version-matching) is present.
@@ -7,14 +7,14 @@
 // The logic is a direct port of `ensure_compiler` + `ensure_kernel_compiler` from
 // the xtask utils.rs, with the following adaptations:
 //
-//   • `force_install = true` is hard-coded (build scripts are non-interactive).
-//   • `remove_existing = false` is hard-coded (no --force flag equivalent here;
-//     add a REINSTALL_TOOLKIT=1 env var override if you need that behaviour).
-//   • `atty` / interactive prompts are removed — a build script always installs.
-//   • `lazy_static` is replaced with plain `const` — no runtime dependency needed.
-//   • `project_root()` is replaced with `CARGO_MANIFEST_DIR` (provided by Cargo).
-//   • `println!` output uses `cargo:warning=` so it surfaces during `cargo build`.
-//   • HTTP is handled by `ureq` (pure Rust, TLS included) — no curl/wget needed.
+//   * `force_install = true` is hard-coded (build scripts are non-interactive).
+//   * `remove_existing = false` is hard-coded (no --force flag equivalent here; add a `REINSTALL_TOOLKIT=1`
+//     env var override if you need that behavior).
+//   * `atty` / interactive prompts are removed - a build script always installs.
+//   * `lazy_static` is replaced with plain `const` - no runtime dependency needed.
+//   * `project_root()` is replaced with `CARGO_MANIFEST_DIR` (provided by Cargo).
+//   * `println!` output uses `cargo:warning=` so it surfaces during `cargo build`.
+//   * HTTP is handled by `ureq` (pure Rust, TLS included) - no curl/wget needed.
 
 use std::{
     collections::BTreeMap,
@@ -47,7 +47,7 @@ fn main() {
 
     // Optional escape hatch: set SKIP_TOOLKIT_INSTALL=1 to bypass entirely.
     if std::env::var("SKIP_TOOLKIT_INSTALL").as_deref() == Ok("1") {
-        cargo_warn("SKIP_TOOLKIT_INSTALL is set — skipping toolkit check.");
+        cargo_warn("SKIP_TOOLKIT_INSTALL is set - skipping toolkit check.");
         return;
     }
 
@@ -93,13 +93,13 @@ fn ensure_compiler(target: &str, remove_existing: bool) -> Result<(), String> {
             let target_loader = workspace_root.join("loader").join("target").join(target);
             std::fs::remove_dir_all(&target_loader).ok();
         } else {
-            // Sysroot present and version matches — nothing to do.
+            // Sysroot present and version matches - nothing to do.
             cargo_warn(&format!("Toolchain for {} is already installed and up-to-date.", target));
             return Ok(());
         }
     }
 
-    // No suitable sysroot found — we need to download a new one.
+    // No suitable sysroot found - we need to download a new one.
     let toolchain_path = get_sysroot(None, /* check_version= */ false)?
         .ok_or_else(|| "default toolchain not installed".to_owned())?;
 
@@ -125,7 +125,7 @@ fn ensure_compiler(target: &str, remove_existing: bool) -> Result<(), String> {
 // ensure_kernel_compiler
 //
 // Port of `ensure_kernel_compiler(target, force_install=true)`.
-// Uses `rustup target add` — no custom zip needed for the bare-metal target.
+// Uses `rustup target add` - no custom zip needed for the bare-metal target.
 // ---------------------------------------------------------------------------
 
 fn ensure_kernel_compiler(target: &str) -> Result<(), String> {
